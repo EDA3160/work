@@ -1,0 +1,3 @@
+/home/spiderman/桌面/project/cmake-build-debug/CMakeFiles/test1.dir
+/home/spiderman/桌面/project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/spiderman/桌面/project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
