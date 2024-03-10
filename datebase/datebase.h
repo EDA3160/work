@@ -5,8 +5,9 @@
 #ifndef PROJECT_DATEBASE_H
 #define PROJECT_DATEBASE_H
 
-
+#endif //PROJECT_DATEBASE_H
 #include<iostream>
+#include<vector>
 class mos
 {
     std::string m_name;
@@ -19,6 +20,10 @@ class mos
     int m_x;
     int m_f;
 };
-
-
-#endif //PROJECT_DATEBASE_H
+class net
+{
+    int num_pmos;
+    std::vector<mos> pmos;
+    int num_nmos;
+    std::vector<mos> nmos;
+};
