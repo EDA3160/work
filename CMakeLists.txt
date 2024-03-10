@@ -2,4 +2,6 @@ cmake_minimum_required(VERSION 3.22)
 project(project)
 
 set(CMAKE_CXX_STANDARD 11)
-add_executable(test1 main.cpp)
+add_executable(test1 main.cpp
+database.h database.cpp
+parser.h parser.cpp)

@@ -5,7 +5,7 @@
 #ifndef PROJECT_DATEBASE_H
 #define PROJECT_DATEBASE_H
 
-#endif //PROJECT_DATEBASE_H
+
 #include<iostream>
 class mos
 {
@@ -19,3 +19,6 @@ class mos
     int m_x;
     int m_f;
 };
+
+
+#endif //PROJECT_DATEBASE_H
