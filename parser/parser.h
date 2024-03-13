@@ -4,7 +4,11 @@
 
 #ifndef WORK_PARSER_PARSER_H_
 #define WORK_PARSER_PARSER_H_
-
+class parser
+        {
+        public:
+            void parser();
+};
 
 
 
