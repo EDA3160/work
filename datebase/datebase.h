@@ -5,7 +5,7 @@
 #ifndef PROJECT_DATEBASE_H
 #define PROJECT_DATEBASE_H
 
-#endif //PROJECT_DATEBASE_H
+
 #include<iostream>
 #include<vector>
 class mos
@@ -27,3 +27,4 @@ class net
     int num_nmos;
     std::vector<mos> nmos;
 };
+#endif //PROJECT_DATEBASE_H
