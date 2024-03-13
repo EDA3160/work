@@ -12,35 +12,41 @@
 
 void parser::parser()
 {
-  std::ifstream file("C:/Users/Defender/Desktop/cells.txt"); // 替换为实际的文件路径
+  std::ifstream file("..//cell.cpi");
 
   if (file.is_open())
   {
-      std::getline(file, 1);
-      while()
+      while (!file.eof())
       {
-          std::getline(file, 1);
-          mos new_mos;
-          std::string temp;
-          char unit;
-          file.get(new_mos.m_name);
-          file.get(new_mos.m_source);
-          file.get(new_mos.m_gate);
-          file.get(new_mos.m_drain);
-          fiel.get();
-          file.get(temp);
-          if(temp[0]=='n'){
-              new_mos.m_sort=1;
+          std:string line;
+          getline(file, line);
+          if (line.find(".ENDS") != std::string::npos)
+          {
+              continue;
           }
-          else if(temp[0]=='p'){
-              new_mos.m_sort=0;
+          if (line.find("MM") != std::string::npos)
+          {
+              mos new_mos;
+              char name[10] ,source[10], gate[10],drain[10] ,temp[10];
+              char unit;
+
+              std::sscanf(line.c_str(), "%s %s %s %s %*s %s l=%lfn w=%lf%c",name,
+                     source,gate,drain,temp,&new_mos.w_width,&new_mos.w_length,&unit);
+              new_mos.m_name = name;
+              new_mos.m_source = source;
+              new_mos.m_gate = gate;
+              new_mos.m_drain = drain;
+              if(temp[0]=='n'){
+                  new_mos.m_sort=1;
+              }
+              else if(temp[0]=='p'){
+                  new_mos.m_sort=0;
+              }
+              if(unit=='n'){
+                  new_mos.w_length*=1000;
+              }
+
           }
-          fscanf_s(file,"l=%fn",&new_mos.w_wide);
-          fscanf_s(file,"w=%f%c",&new_mos.m_long,&unit);
-          if(unit=='n')
-              new_mos.m_long*=1000;
-
-
       }
       file.close();
   }
@@ -50,6 +56,6 @@ void parser::parser()
   }
 
 
-  return 0;
+
 }
 

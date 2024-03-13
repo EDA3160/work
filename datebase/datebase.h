@@ -15,8 +15,8 @@ class mos
     std::string m_source;
     std::string m_gate;
     std::string m_drain;
-    float w_wide;
-    float w_long;
+    float w_width;
+    float w_length;
     int m_x;//x_loc
     int m_f;//is_roll
 };
