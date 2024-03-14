@@ -10,6 +10,10 @@
 #include<vector>
 class mos
 {
+    public:
+    mos(){}
+    mos(const mos &mos_i){}
+    ~mos(){}
     std::string m_name;
     int m_sort;
     std::string m_source;
