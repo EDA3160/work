@@ -31,7 +31,7 @@ void parser::parser()
               char unit;
 
               std::sscanf(line.c_str(), "%s %s %s %s %*s %s l=%lfn w=%lf%c",name,
-                     source,gate,drain,temp,&new_mos.w_width,&new_mos.w_length,&unit);
+                     source,gate,drain,temp,&new_mos.w_length,&new_mos.w_width,&unit);
               new_mos.m_name = name;
               new_mos.m_source = source;
               new_mos.m_gate = gate;
@@ -43,7 +43,7 @@ void parser::parser()
                   new_mos.m_sort=0;
               }
               if(unit=='n'){
-                  new_mos.w_length*=1000;
+                  new_mos.w_width*=1000;
               }
 
           }
