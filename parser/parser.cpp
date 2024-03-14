@@ -10,7 +10,7 @@
 
 
 
-void parser::parser()
+void parser::parser(vector<mos> Moses)
 {
   std::ifstream file("..//cell.cpi");
 
@@ -45,8 +45,9 @@ void parser::parser()
               if(unit=='n'){
                   new_mos.w_width*=1000;
               }
-
+              Moses.push_back(new_mos);
           }
+        
       }
       file.close();
   }
