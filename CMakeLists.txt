@@ -12,8 +12,8 @@ add_executable(project main.cpp ${SRC_LIST1} ${SRC_LIST})
 
 include_directories("database" "parser")
 
-target_include_directories(project PRIVATE
-        parser
-        database)
+target_include_directories(project
+        PRIVATE "parser"
+        PRIVATE "database")
 
 
