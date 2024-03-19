@@ -4,10 +4,9 @@
 #pragma once
 #ifndef WORK_PARSER_PARSER_H_
 #define WORK_PARSER_PARSER_H_
-class parser
-        {
+class parser{
         public:
-            void parsers(std::vector<mos> Moses);
+            void parsers(std::vector<mos>& Moses);
 };
 
 
