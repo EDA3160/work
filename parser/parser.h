@@ -7,7 +7,7 @@
 class parser
         {
         public:
-            void parser();
+            void parsers(std::vector<mos> Moses);
 };
 
 

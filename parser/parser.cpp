@@ -5,20 +5,21 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "parser.h"
 #include "../datebase/datebase.h"
 
 
 
 
-void parser::parser(vector<mos> Moses)
+void parser::parsers(std::vector<mos> Moses)
 {
-  std::ifstream file("..//cell.cpi");
+  std::ifstream file("../cell.cpi");
 
   if (file.is_open())
   {
       while (!file.eof())
       {
-          std:string line;
+          std::string line;
           getline(file, line);
           if (line.find(".ENDS") != std::string::npos)
           {
