@@ -17,7 +17,7 @@ class mos
                           m_gate(mos_i.m_gate), m_drain(mos_i.m_drain), w_width(mos_i.w_width),
                           w_length(mos_i.w_length), m_x(mos_i.m_x), m_f(mos_i.m_f) {}
 
-  ~mos() = default;
+  ~mos() =  default;
 
   std::string m_name;
   int m_sort;
