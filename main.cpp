@@ -4,7 +4,7 @@
 
 int main()
 {
-    std::vector<mos> Moses);
+    std::vector<mos> Moses;
     parser p;
     p.parsers(Moses);
     std::cout << "hello" <<std::endl;

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include "parser.h"
-#include "../datebase/datebase.h"
+#include "../database/database.h"
 
 
 
@@ -56,8 +56,5 @@ void parser::parsers(std::vector<mos> Moses)
   {
     std::cout << "Unable to open file." << std::endl;
   }
-
-
-
 }
 

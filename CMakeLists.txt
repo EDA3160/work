@@ -10,3 +10,6 @@ aux_source_directory(database SRC_LIST1)
 
 add_executable(project main.cpp ${SRC_LIST1} ${SRC_LIST} )
 
+add_executable(project main.cpp
+        parser/parser.cpp
+        database)

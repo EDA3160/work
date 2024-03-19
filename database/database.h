@@ -1,7 +1,7 @@
 //
 // Created by spiderman on 24-3-10.
 //
-
+#pragma once
 #ifndef PROJECT_DATABASE_H
 #define PROJECT_DATABASE_H
 
