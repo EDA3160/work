@@ -1,3 +1,0 @@
-/home/spiderman/code/text1/build/CMakeFiles/text1.dir
-/home/spiderman/code/text1/build/CMakeFiles/edit_cache.dir
-/home/spiderman/code/text1/build/CMakeFiles/rebuild_cache.dir
