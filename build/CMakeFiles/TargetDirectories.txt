@@ -1,0 +1,3 @@
+D:/repo/framebase/work/build/CMakeFiles/project.dir
+D:/repo/framebase/work/build/CMakeFiles/ALL_BUILD.dir
+D:/repo/framebase/work/build/CMakeFiles/ZERO_CHECK.dir
