@@ -7,6 +7,8 @@
 /dataSources/
 /dataSources.local.xml
 
-/tmp/
+tmp/
+
+
 *.exe
 cells.spi

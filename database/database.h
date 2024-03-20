@@ -2,10 +2,7 @@
 // Created by spiderman on 24-3-10.
 //
 #pragma once
-#ifndef PROJECT_DATABASE_H
-#define PROJECT_DATABASE_H
 
-#include <iostream>
 #include <vector>
 #include <string>
 
@@ -38,4 +35,4 @@ class net
   std::vector<mos> nmos;
 };
 
-#endif //PROJECT_DATABASE_H
+
