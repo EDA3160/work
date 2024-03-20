@@ -13,7 +13,7 @@
 
 void parser::parsers(std::vector<mos>& Moses)
 {
-  std::ifstream file("../cells.cpi");
+  std::ifstream file("../cells.spi");
 
   if (file.is_open())
   {

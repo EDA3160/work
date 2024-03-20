@@ -1,10 +1,14 @@
 #include <iostream>
-#include "./database/database.h"
+#include "./parser/parser.h"
 int main()
 {
+  
+  std::vector<mos> Moses;
+  
+  parser read;
+  read.parsers(Moses);
   std::string a{"wdnmd"};
-  mos mose;
-  mose.m_drain="a1";
-  std::cout << "hello1  2 " <<a<<" "<<mose.m_drain<< std::endl;
+  
+  std::cout << "hello1  2 " <<a<<" "<<""<< std::endl;
   return 0;
 }
