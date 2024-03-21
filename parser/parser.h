@@ -1,13 +1,20 @@
 //
 // Created by Defender on 2024/3/10.
 //
-#pragma once
 
+#ifndef WORK_PARSER_PARSER_H_
+#define WORK_PARSER_PARSER_H_
 #include "../database/database.h"
-class parser{
-        public:
-            void parsers(std::vector<mos>& Moses);
+#include<fstream>
+#include<string>
+#include<sstream>
+class parser
+{
+public:
+    static std::vector<net*> m_parser();
+    
 };
 
 
 
+#endif //WORK_PARSER_PARSER_H_
