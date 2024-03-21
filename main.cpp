@@ -1,16 +1,11 @@
 #include <iostream>
+#include "./database/database.h"
 #include "./parser/parser.h"
 int main()
 {
-  
-  std::vector<mos> Moses;
-  
-  parser readflie;
-  
-  std::vector<net*> network=readflie.m_parser();
-
   std::string a{"wdnmd"};
-  
-  std::cout << "hello1  2 " <<network.at(0)<<" "<<""<< std::endl;
+  mos mose;
+  mose.m_drain="a1";
+  std::cout << "hello1  2 " <<a<<" "<<mose.m_drain<< std::endl;
   return 0;
 }
