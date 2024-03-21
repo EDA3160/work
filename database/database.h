@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <string>
-
+#include <iostream>
 class mos
 {
  public:
@@ -25,6 +25,7 @@ class mos
   float w_length;
   int m_x; // x_loc
   int m_f; // is_roll
+  void ShowData();
 };
 
 class net

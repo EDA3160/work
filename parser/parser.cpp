@@ -13,10 +13,11 @@
 
 void parser::parsers(std::vector<mos>& Moses)
 {
-  std::ifstream file("../cells.cpi");
-
+  std::ifstream file("cells.spi",std::ios::in);
+  
   if (file.is_open())
   {
+    std::cout<<"666\n";
     while (!file.eof())
     {
       std::string line;
