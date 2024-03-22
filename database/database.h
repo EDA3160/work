@@ -1,39 +1,62 @@
 //
 // Created by spiderman on 24-3-10.
 //
-#pragma once
 
-#include <vector>
-#include <string>
-#include <iostream>
+#ifndef PROJECT_DATEBASE_H
+#define PROJECT_DATEBASE_H
+
+#include<iostream>
+#include<vector>
 class mos
 {
- public:
-  mos() {}
-  mos(const mos& mos_i) : m_sort(mos_i.m_sort), m_name(mos_i.m_name), m_source(mos_i.m_source),
-                          m_gate(mos_i.m_gate), m_drain(mos_i.m_drain), w_width(mos_i.w_width),
-                          w_length(mos_i.w_length), m_x(mos_i.m_x), m_f(mos_i.m_f) {}
-
-  ~mos() =  default;
-
-  std::string m_name;
-  int m_sort;
-  std::string m_source;
-  std::string m_gate;
-  std::string m_drain;
-  float w_width;
-  float w_length;
-  int m_x; // x_loc
-  int m_f; // is_roll
-  void ShowData();
+public:
+    mos();
+    /*{
+        this->m_f = 0;
+        this->m_x = -1;
+        this->m_long = 0;
+        this->m_wide = 0;
+    }*/
+    mos(std::string name,int sort,std::string source,std::string gate,std::string drain,int wide,int lon);
+    /*{
+        this->m_x = -1;
+        this->m_f = 0;
+        this->m_drain = drain;
+        this->m_gate = gate;
+        this->m_source = source;
+        this->m_wide =wide;
+        this->m_sort = sort;
+        this->m_name = name;
+        this->m_long = lon;
+    }*/
+    std::string m_name;
+    int m_sort;
+    std::string m_source;
+    std::string m_gate;
+    std::string m_drain;
+    int m_wide;
+    int m_long;
+    int m_x;
+    int m_f;
 };
-
 class net
 {
-  int num_pmos;
-  std::vector<mos> pmos;
-  int num_nmos;
-  std::vector<mos> nmos;
+public:
+    net();
+    /*{
+        this->num_nmos = 0;
+        this->num_pmos = 0;
+    }*/
+    net(int num_pmos,int num_nmos,std::vector<mos*> pmos,std::vector<mos*> nmos);
+    /*{
+        this->num_pmos = num_pmos;
+        this->num_nmos = num_nmos;
+        this->pmos = pmos;
+        this->nmos = nmos;
+    }*/
+    int num_pmos;
+    std::vector<mos*> pmos;
+    int num_nmos;
+    std::vector<mos*> nmos;
 };
-
-
+#endif //PROJECT_DATEBASE_H
