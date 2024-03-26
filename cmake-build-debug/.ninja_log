@@ -1,0 +1,5 @@
+# ninja log v5
+43	537	7331443694832002	CMakeFiles/project.dir/database/database.cpp.obj	87f69fb481e143ef
+34	503	7331443694478269	CMakeFiles/project.dir/main.cpp.obj	649760b45b765f30
+611	760	7331443697022385	project.exe	a6e89759adcb83de
+38	610	7331443695546761	CMakeFiles/project.dir/parser/parser.cpp.obj	815439cc66ec9c6b

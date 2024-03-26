@@ -18,5 +18,3 @@ include_directories("database" "parser" "function" "parser")
 # target_include_directories(project
 #         PRIVATE "parser"
 #         PRIVATE "database")
-
-
