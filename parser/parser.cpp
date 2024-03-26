@@ -13,8 +13,8 @@ std::vector<net*> parser::m_parser()
   std::string drain;
   int m_wide;
   int m_long;
-  int num_nmos;
-  int num_pmos;
+  int num_nmos=0;
+  int num_pmos=0;
   std::string l;
   std::string w;
   std::string sort1;
@@ -22,7 +22,7 @@ std::vector<net*> parser::m_parser()
   std::vector<mos*> pmos;
   std::vector<mos*> nmos;
   std::ifstream ifs;
-  ifs.open("../cell.spi",std::ios::in);
+  ifs.open("./cell.spi",std::ios::in);
   if(!ifs.is_open())
   {
     std::cout << "fail to open the file" << std::endl;
