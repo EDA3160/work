@@ -4,7 +4,7 @@ project(project)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-
+set(CMAKE_CXX_LINK_FLAGS "-static" )
 
 aux_source_directory("database" SRC_LIST0)
 aux_source_directory("exporter" SRC_LIST1)
