@@ -4,8 +4,9 @@
 
 #ifndef PROJECT_DATABASE_DATABASE_H_
 #define PROJECT_DATABASE_DATABASE_H_
-#include<iostream>
-#include<vector>
+#include <adoctint.h>
+#include <iostream>
+#include <vector>
 class mos
 {
  public:
@@ -38,6 +39,8 @@ class mos
   int m_x;
   int m_f;
 };
+
+
 class net
 {
  public:

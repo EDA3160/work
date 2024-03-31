@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/project.dir/main.cpp.obj.d"
   "CMakeFiles/project.dir/parser/parser.cpp.obj"
   "CMakeFiles/project.dir/parser/parser.cpp.obj.d"
+  "CMakeFiles/project.dir/placement/placement.cpp.obj"
+  "CMakeFiles/project.dir/placement/placement.cpp.obj.d"
   "libproject.dll.a"
   "project.exe"
   "project.exe.manifest"

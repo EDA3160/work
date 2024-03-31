@@ -200,6 +200,30 @@ parser/parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\project.dir\build.make CMakeFiles/project.dir/parser/parser.cpp.s
 .PHONY : parser/parser.cpp.s
 
+placement/placement.obj: placement/placement.cpp.obj
+.PHONY : placement/placement.obj
+
+# target to build an object file
+placement/placement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\project.dir\build.make CMakeFiles/project.dir/placement/placement.cpp.obj
+.PHONY : placement/placement.cpp.obj
+
+placement/placement.i: placement/placement.cpp.i
+.PHONY : placement/placement.i
+
+# target to preprocess a source file
+placement/placement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\project.dir\build.make CMakeFiles/project.dir/placement/placement.cpp.i
+.PHONY : placement/placement.cpp.i
+
+placement/placement.s: placement/placement.cpp.s
+.PHONY : placement/placement.s
+
+# target to generate assembly for a file
+placement/placement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\project.dir\build.make CMakeFiles/project.dir/placement/placement.cpp.s
+.PHONY : placement/placement.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -218,6 +242,9 @@ help:
 	@echo ... parser/parser.obj
 	@echo ... parser/parser.i
 	@echo ... parser/parser.s
+	@echo ... placement/placement.obj
+	@echo ... placement/placement.i
+	@echo ... placement/placement.s
 .PHONY : help
 
 

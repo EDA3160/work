@@ -103,6 +103,12 @@
 		<Unit filename="C:/Users/Defender/Desktop/project/work/parser/parser.h">
 			<Option target="project"/>
 		</Unit>
+		<Unit filename="C:/Users/Defender/Desktop/project/work/placement/placement.cpp">
+			<Option target="project"/>
+		</Unit>
+		<Unit filename="C:/Users/Defender/Desktop/project/work/placement/placement.h">
+			<Option target="project"/>
+		</Unit>
 		<Unit filename="C:/Users/Defender/Desktop/project/work/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

@@ -11,10 +11,14 @@ aux_source_directory("exporter" SRC_LIST1)
 aux_source_directory("function" SRC_LIST2)
 aux_source_directory("parser" SRC_LIST3)
 
-add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST3})
+add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST3}
+        placement/placement.h
+        placement/placement.cpp)
 
 include_directories("database" "parser" "function" "parser")
 
 # target_include_directories(project
 #         PRIVATE "parser"
 #         PRIVATE "database")
+
+
