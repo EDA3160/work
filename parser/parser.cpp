@@ -14,8 +14,8 @@ std::vector<net*> parser::m_parser()
     std::string drain;
     int m_wide;
     int m_long;
-    int num_nmos;
-    int num_pmos;
+    int num_nmos=0;
+    int num_pmos=0;
     std::string l;
     std::string w;
     std::string sort1;

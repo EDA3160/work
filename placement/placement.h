@@ -4,24 +4,36 @@
 #include "database.h"
 #include <string>
 #include <vector>
-#include <unordered_map>
 
-class Placement {
+
+class placement
+        {
 public:
-  Placement(const std::string& m_gate, const std::vector<mos*>& pmos, const std::vector<mos*>& nmos,
-            const std::vector<std::unordered_map<std::string, std::vector<mos*>>> placement_x, const std::vector<std::unordered_map<std::string, std::vector<mos*>>> placement_y);
+
+            void slover();
+
+
+
+
 
 private:
-  std::string m_gate;
-  std::vector<mos*> pmos;
-  std::vector<mos*> nmos;
+            std::vector<net*> network;
+            double T_min;
+            double T;
+            double cool_rate;
+            int cost;
+            int bset_cost;
+        std::vector<int> pmos_loc;
+        std::vector<int> nmos_loc;
+        std::vector<int> best_pmos_loc;
+        std::vector<int> best_nmos_loc;
+        void GenerateRandomSolutions();
+        int get_cost(net* anet);
+        void layout(net* anet );
+        void init_SA();
+        void swap_mos();
+        void run_SA();
 
-  static std::vector<std::unordered_map<std::string, std::vector<mos*>>> placement_x;
-  static std::vector<std::unordered_map<std::string, std::vector<mos*>>> placement_y;
-
-
-
-
-};
+        };
 
 #endif // PROJECT_PLACEMENT_PLACEMENT_H_
