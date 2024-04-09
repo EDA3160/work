@@ -5,7 +5,8 @@
 #include "database.h"
 #include <cstdlib>
 #include <ctime>
-#include "algorithm"
+#include <algorithm>
+#include <random>
 
 void placement:: init_SA()
 {
@@ -51,16 +52,18 @@ void placement::swap_mos(){
 //产生随机解
 void placement::GenerateRandomSolutions()
 {
+        std::random_device rd;
+        std::mt19937 rng(rd());
         for(int i=0;i<pmos_loc.size();i++)
         {
                 pmos_loc[i]=i;
         }
-        std::random_shuffle(pmos_loc.begin(), pmos_loc.end());
+        std::shuffle(pmos_loc.begin(), pmos_loc.end(),rng);
         for(int i=0;i<nmos_loc.size();i++)
         {
             nmos_loc[i]=i;
         }
-        std::random_shuffle(nmos_loc.begin(), nmos_loc.end());
+        std::shuffle(nmos_loc.begin(), nmos_loc.end(),rng);
 
 }
 
@@ -74,7 +77,7 @@ void placement::layout(net* this_net)
     std::string p_right;
     std::string n_right;
 
-    while (num_nmos<this_net->num_nmos&&num_pmos<this_net->num_pmos)
+    while (num_nmos < this_net->num_nmos && num_pmos < this_net->num_pmos)
     {
         //除布局第一个mos外，布局mos时判断是否可重叠
         if(num_pmos>0)

@@ -17,12 +17,12 @@ public:
 
 
 private:
-            std::vector<net*> network;
-            double T_min;
-            double T;
-            double cool_rate;
-            int cost;
-            int bset_cost;
+        std::vector<net*> network;
+        double T_min;
+        double T;
+        double cool_rate;
+        int cost;
+        int bset_cost;
         std::vector<int> pmos_loc;
         std::vector<int> nmos_loc;
         std::vector<int> best_pmos_loc;
