@@ -1,21 +1,26 @@
 //
 // Created by Defender on 2024/3/31.
 //
+
 #include "placement.h"
 #include "database.h"
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include <algorithm>
 #include <random>
 
-void placement:: init_SA()
-{
+placement::placement(std::vector<net*> m_network) :network(m_network){};
 
-;
+
+void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
+{
+    T=100+T_lambda*log(1+1/(this_net->num_nmos+this_net->num_pmos));
+    T_descent_rate=T_descent_lambda*exp(1/(this_net->num_nmos+this_net->num_pmos)); //数量越大下降越慢 温度高的时候尽可能小
 }
 
 
-int placement::get_cost(net* this_net){
+double placement::get_cost_0(net* this_net){
     int f_cost=0;
     for(int i=0;i<this_net->num_pmos;i++)
     {
@@ -25,7 +30,15 @@ int placement::get_cost(net* this_net){
     {
         f_cost=std::max(f_cost,this_net->nmos[i]->m_x);
     }
-    return f_cost;
+    return f_cost*this_net->num_nmos+this_net->num_pmos;
+
+
+}
+double get_cost_1(int action,net* anet,mos* mos)
+{
+
+
+
 
 
 }
@@ -143,7 +156,7 @@ void placement::layout(net* this_net)
 
 }
 
-void placement::slover()
+void placement::Slover()
 {
     srand(time(nullptr));
     for(int a=0;a<network.size();a++)
@@ -154,8 +167,73 @@ void placement::slover()
         best_pmos_loc.resize(network[a]->num_pmos);
         GenerateRandomSolutions();
         layout(network[a]);
-        cost= get_cost(network[a]);
+        cost= get_cost_0(network[a]);
 
 
     }
 }
+
+double placement::action(double max_T,double &T_descent_rate,double &T,net* this_net)//返回一个新的下降率 在温度高的时候要尽可能小 得到一个优秀解的时候要尽可能的大
+{
+    std::default_random_engine e;//给随机数
+    std::uniform_real_distribution<double> double_u(0,1); // 左闭右闭区间
+    std::uniform_int_distribution<int> int_u(1,3);//1是移动 2是传送交换 3是反转
+    e.seed(time(0));
+    
+    int action_int;
+    double accept_rate;
+    for(auto nmos:this_net->nmos)
+    {
+        net tem_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原
+        action_int=int_u(e);
+        accept_rate=get_cost_1(action_int,this_net,nmos);//获得局部更改后的代价参数 返回接受率 如果比原来更好就大于0
+        if(accept_rate<1)
+        {
+            if(T*(accept_rate)/max_T < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
+            {
+            *this_net = tem_net;
+            }
+        }
+    }
+    for(auto pmos:this_net->pmos)//   pmos同理
+    {
+        net tem_net = *this_net;
+        action_int=int_u(e);
+        accept_rate=get_cost_1(action_int,this_net,pmos);
+        if(accept_rate<1)
+        {
+            if(T*(accept_rate)/max_T < double_u(e))  
+            {
+            *this_net = tem_net;
+            }
+        }
+    }
+
+    return  T_descent_rate*get_cost_0(this_net) ; //根据全局的好坏来调整下降率
+
+}
+
+void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
+{
+   double max_T = T;// 定义一个最大温度
+
+    while(T>0.05)
+    {
+        double differ_T=0;
+        while(differ_T<-5)
+        {
+            double tem_T = T;
+            T_descent_rate=action(max_T,T_descent_rate,T,this_net);
+            differ_T*=(1-T_descent_rate);
+            differ_T=tem_T-T;
+
+        }
+        T-=differ_T;
+
+    }
+
+
+};
+
+
+
