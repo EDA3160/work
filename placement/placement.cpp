@@ -36,11 +36,11 @@ double placement::get_cost_0(net* this_net){
 }
 double get_cost_1(int action,net* anet,mos* mos)
 {
+    double differ_j_i;//两次代价的差值
 
 
 
-
-
+    return exp(-(differ_j_i));
 }
 
 void placement::swap_mos(){
@@ -177,7 +177,7 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 {
     std::default_random_engine e;//给随机数
     std::uniform_real_distribution<double> double_u(0,1); // 左闭右闭区间
-    std::uniform_int_distribution<int> int_u(1,3);//1是移动 2是传送交换 3是反转
+    std::uniform_int_distribution<int> int_u(0,3);//1是移动 2是传送交换 3是反转  0是不动
     e.seed(time(0));
     
     int action_int;
@@ -186,8 +186,8 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     {
         net tem_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原
         action_int=int_u(e);
-        accept_rate=get_cost_1(action_int,this_net,nmos);//获得局部更改后的代价参数 返回接受率 如果比原来更好就大于0
-        if(accept_rate<1)
+        accept_rate=get_cost_1(action_int,this_net,nmos);//获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
+        if(accept_rate<1&&action_int)
         {
             if(T*(accept_rate)/max_T < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
             {
@@ -220,12 +220,12 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
     while(T>0.05)
     {
         double differ_T=0;
-        while(differ_T<-5)
+        while(differ_T<(-5*T/max_T))
         {
             double tem_T = T;
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
-            differ_T*=(1-T_descent_rate);
-            differ_T=tem_T-T;
+            differ_T=T*T_descent_rate;//温度下降量
+            
 
         }
         T-=differ_T;
