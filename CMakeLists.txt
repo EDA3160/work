@@ -8,14 +8,12 @@ set(CMAKE_CXX_LINK_FLAGS "-static" )
 
 aux_source_directory("database" SRC_LIST0)
 aux_source_directory("exporter" SRC_LIST1)
-aux_source_directory("function" SRC_LIST2)
-aux_source_directory("parser" SRC_LIST3)
+aux_source_directory("placement" SRC_LIST2)
+aux_source_directory("parser" SRC_LIST4)
 
-add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST3}
-        placement/placement.h
-        placement/placement.cpp)
+add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST4})
 
-include_directories("database" "parser" "function" "parser")
+include_directories("database" "parser"  "parser"  "placement")
 
 # target_include_directories(project
 #         PRIVATE "parser"

@@ -24,6 +24,7 @@ public:
     int m_x;
     int m_f;
 };
+
 class net
 {
 public:
@@ -36,7 +37,7 @@ public:
     int num_nmos=0;
     std::vector<mos*> nmos;
     std::string name;
-
+    net& operator=(const net* net);
 
 };
 #endif //PROJECT_DATEBASE_H
