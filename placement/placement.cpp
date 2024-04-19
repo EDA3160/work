@@ -33,14 +33,14 @@ double placement::get_cost_0(net* this_net){
 
 
 }
-double placement::get_cost_1(int action,net* anet,mos* mos,double eff_T) //这里传了这么多参数进来是想就算局部变化量的 我鸽了：）
+double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //这里传了这么多参数进来是想就算局部变化量的 我鸽了：）
 {
     
-    double i =get_cost_0(anet);//前代价
+    double i =get_cost_0(this_net);//前代价
     double j = i;                  //后代价
     double differ_j_i;//两次代价的差值
     std::default_random_engine e;//给随机数
-    std::uniform_real_distribution<int> axis(0,anet->num_nmos); // 左闭右闭区间
+    std::uniform_int_distribution<int> axis(0,this_net->num_nmos); // 左闭右闭区间
     
     if(action==0)
     {
@@ -49,20 +49,20 @@ double placement::get_cost_1(int action,net* anet,mos* mos,double eff_T) //这�
     else if(action==1)
     {
         mos->m_x++;
-        layout(anet);
-        j=get_cost_0(anet);
+        layout(this_net);
+        j=get_cost_0(this_net);
     }
     else if(action==2)
     {
         swap_mos();
-        layout(anet);
-        j=get_cost_0(anet);
+        layout(this_net);
+        j=get_cost_0(this_net);
     }
     else if(action==3)
     {
         mos->m_f^=mos->m_f; //旋转
         std::swap(mos->m_drain,mos->m_source);//由于cost函数的单调目前这玩意好像没有什么实质性作用啊啊(#｀-_ゝ-)
-        j=get_cost_0(anet);
+        j=get_cost_0(this_net);
     }
     differ_j_i=j-i;
     if(differ_j_i>=0)
@@ -78,12 +78,16 @@ void placement::swap_mos(){
     {
         int random1=rand()%pmos_loc.size();
         int random2=rand()%pmos_loc.size();
+        while (random1==random2)
+            random2=rand()%pmos_loc.size();
         std::swap(pmos_loc[random1],pmos_loc[random2]);
     }
     else if(method==1)
     {
         int random1=rand()%nmos_loc.size();
         int random2=rand()%nmos_loc.size();
+        while (random1==random2)
+            random2=rand()%nmos_loc.size();
         std::swap(nmos_loc[random1],nmos_loc[random2]);
     }
 
