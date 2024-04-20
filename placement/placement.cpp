@@ -131,22 +131,26 @@ void placement::layout(net* this_net)
                 x_p++;
             }
             //可重叠但是上一个nmos占用该x坐标并且栅极不相等
-            else if(x_p==this_net->nmos[nmos_loc[num_nmos]]->m_x-1&&this_net->nmos[nmos_loc[num_nmos-1]]->m_gate!=this_net->pmos[pmos_loc[num_pmos]]->m_gate){
+            else if(x_p==this_net->nmos[nmos_loc[num_nmos-1]]->m_x&&this_net->nmos[nmos_loc[num_nmos-1]]->m_gate!=this_net->pmos[pmos_loc[num_pmos]]->m_gate){
                 x_p++;
             }
 
         }
-        if(num_nmos>0)
-        {
-            if(this_net->nmos[nmos_loc[num_nmos]]->m_source!=n_right)
-                x_n++;
-        }
-
         //布局pmos
         this_net->pmos[pmos_loc[num_pmos]]->m_x=x_p++;
+
+        if(num_nmos>0)
+        {
+            if(this_net->nmos[nmos_loc[num_nmos]]->m_source!=n_right){
+                x_n++;
+            }
+        }
+
+
         //判断栅极是否可连接
-        if(this_net->nmos[nmos_loc[num_nmos]]->m_gate!=this_net->pmos[pmos_loc[num_pmos]]->m_gate)
+        if(x_n==this_net->pmos[pmos_loc[num_pmos]]->m_x&&this_net->pmos[pmos_loc[num_pmos]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
             x_n++;
+        }
         //布局nmos
         this_net->nmos[nmos_loc[num_nmos]]->m_x=x_n++;
         //记录右端线网
