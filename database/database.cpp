@@ -74,7 +74,7 @@ net& net::operator=(const net& other)
         // 复制 other 中的指针向量
         for (mos* ptr : other.nmos) {
             mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
-            pointers.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
+            this->nmos.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
         }
         //pmos再来一次
         for (mos *ptr : this->pmos) {
@@ -85,7 +85,7 @@ net& net::operator=(const net& other)
         // 复制 other 中的指针向量
         for (mos* ptr : other.pmos) {
             mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
-            pointers.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
+            this->pmos.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
         }
 
         return *this;
