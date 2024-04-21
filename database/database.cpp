@@ -34,18 +34,26 @@ net::net(int num_pmos,int num_nmos,std::vector<mos*> pmos,std::vector<mos*> nmos
     this->nmos = nmos;
     this->name = name;
 }
-net& net::operator=(const net* net)
+net::net(const net& other)
 {
-    this->name=net->name;
-    for(auto it=net->nmos.begin();it<nmos.end();++it)// 感觉有问题啊
-{
-	this->nmos.push_back(*it);
+    this->num_pmos = other.num_pmos;
+    this->num_nmos = other.num_nmos;
+    this->pmos.clear();
+    for (int i = 0; i < other.pmos.size(); i++) {
+        this->pmos.push_back(new mos(*other.pmos[i]));
+    }
+    this->nmos.clear();
+    for (int i = 0; i < other.nmos.size(); i++) {
+        this->nmos.push_back(new mos(*other.nmos[i]));
+    }
+    this->name = other.name;
 }
-    for(auto it=net->pmos.begin();it<pmos.end();++it)
-{
-	this->pmos.push_back(*it);
-}
-    this->num_nmos=net->num_nmos;
-    this->num_pmos=net->num_pmos;
-    return *this;
+
+net::~net() {
+    for (int i = 0; i < pmos.size(); i++) {
+        delete pmos[i];
+    }
+    for (int i = 0; i < nmos.size(); i++) {
+        delete nmos[i];
+    }
 }

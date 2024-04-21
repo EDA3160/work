@@ -144,6 +144,9 @@ void placement::layout(net* this_net)
             if(this_net->nmos[nmos_loc[num_nmos]]->m_source!=n_right){
                 x_n++;
             }
+            else if(x_n==this_net->pmos[pmos_loc[num_pmos-1]]->m_x&&this_net->pmos[pmos_loc[num_pmos-1]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
+                x_n++;
+            }
         }
 
 
@@ -218,29 +221,29 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     double eff_T = T/max_T; //反应退火的进程 温度越低越小
     int action_int;
     double accept_rate;
-    for(auto nmos:this_net->nmos)
+    for(auto& nmos:this_net->nmos)
     {
-        net tem_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原  所以database我重载=号了
+        net temp_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原  所以database我重载=号了
         action_int=int_u(e);
         accept_rate=get_cost_1(action_int,this_net,nmos,eff_T);//获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
         if(accept_rate<1&&action_int)
         {
             if(eff_T*(accept_rate) < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
             {
-                *this_net = tem_net;
+                *this_net = temp_net;
             }
         }
     }
-    for(auto pmos:this_net->pmos)//   pmos同理
+    for(auto& pmos:this_net->pmos)//   pmos同理
     {
-        net tem_net = *this_net;
+        net temp_net = *this_net;
         action_int=int_u(e);
         accept_rate=get_cost_1(action_int,this_net,pmos,eff_T);
         if(accept_rate<1)
         {
             if(eff_T*(accept_rate) < double_u(e))  
             {
-                *this_net = tem_net;
+                *this_net = temp_net;
             }
         }
     }
@@ -258,7 +261,7 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
         double differ_T=0;
         while(differ_T<(-5*T/max_T))
         {
-            double tem_T = T;
+            double temp_T = T;
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
             differ_T=T*T_descent_rate;//温度下降量
             

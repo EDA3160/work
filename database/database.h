@@ -31,13 +31,15 @@ public:
     net();
 
     net(int num_pmos,int num_nmos,std::vector<mos*> pmos,std::vector<mos*> nmos,std::string name);
-
+    net(const net& other);
+    ~net();
     int num_pmos=0;
     std::vector<mos*> pmos;
     int num_nmos=0;
     std::vector<mos*> nmos;
     std::string name;
-    net& operator=(const net* net);
+
+
 
 };
 #endif //PROJECT_DATEBASE_H
