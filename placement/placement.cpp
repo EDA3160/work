@@ -71,9 +71,9 @@ double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //�
 }                                    
 
 void placement::swap_mos(){
-    int method=rand()%2;
+    int method=rand()%3;
     //交换
-    //0表示交换pmos，1表示交换nmos
+    //0表示交换pmos，1表示交换nmos,2表示都换
     if(method==0)
     {
         int random1=rand()%pmos_loc.size();
@@ -90,7 +90,27 @@ void placement::swap_mos(){
             random2=rand()%nmos_loc.size();
         std::swap(nmos_loc[random1],nmos_loc[random2]);
     }
+    else if(method==2)
+    {
+        if(nmos_loc.size()>=pmos_loc.size())
+        {
+            int random1=rand()%pmos_loc.size();
+            int random2=rand()%pmos_loc.size();
+            while (random1==random2)
+                random2=rand()%pmos_loc.size();
+            std::swap(pmos_loc[random1],pmos_loc[random2]);
+            std::swap(nmos_loc[random1],nmos_loc[random2]);
+        }
+        else{
+            int random1=rand()%nmos_loc.size();
+            int random2=rand()%nmos_loc.size();
+            while (random1==random2)
+                random2=rand()%nmos_loc.size();
+            std::swap(pmos_loc[random1],pmos_loc[random2]);
+            std::swap(nmos_loc[random1],nmos_loc[random2]);
 
+        }
+    }
 }
 
 //产生随机解
