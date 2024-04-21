@@ -38,7 +38,7 @@ public:
     int num_nmos=0;
     std::vector<mos*> nmos;
     std::string name;
-
+    net& operator=(const net& other);
 
 
 };

@@ -57,3 +57,36 @@ net::~net() {
         delete nmos[i];
     }
 }
+
+net& net::operator=(const net& other)
+{
+    if (this == &other) 
+        {                 
+            return *this;
+        }                 // 检查自赋值情况
+
+        // 先清空当前的指针向量
+        for (mos *ptr : this->nmos) {
+            delete ptr;
+        }
+        nmos.clear();
+
+        // 复制 other 中的指针向量
+        for (mos* ptr : other.nmos) {
+            mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
+            pointers.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
+        }
+        //pmos再来一次
+        for (mos *ptr : this->pmos) {
+            delete ptr;
+        }
+        nmos.clear();
+
+        // 复制 other 中的指针向量
+        for (mos* ptr : other.pmos) {
+            mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
+            pointers.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
+        }
+
+        return *this;
+}
