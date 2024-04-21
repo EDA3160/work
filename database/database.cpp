@@ -66,24 +66,28 @@ net& net::operator=(const net& other)
         }                 // 检查自赋值情况
 
         // 先清空当前的指针向量
-        for (mos *ptr : this->nmos) {
+        for (mos *ptr : this->nmos) 
+        {
             delete ptr;
         }
         nmos.clear();
 
         // 复制 other 中的指针向量
-        for (mos* ptr : other.nmos) {
+        for (mos* ptr : other.nmos) 
+        {
             mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
             this->nmos.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
         }
         //pmos再来一次
-        for (mos *ptr : this->pmos) {
+        for (mos *ptr : this->pmos) 
+        {
             delete ptr;
         }
         nmos.clear();
 
         // 复制 other 中的指针向量
-        for (mos* ptr : other.pmos) {
+        for (mos* ptr : other.pmos) 
+        {
             mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
             this->pmos.push_back(newPtr);     // 将新对象的指针添加到当前指针向量中
         }
