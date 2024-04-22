@@ -59,5 +59,11 @@ int main()
             std::cout << "f:" <<hello[i]->nmos[j]->m_f<<std::endl;
         }
     }
+
+
+    exporter e;
+    e.exportPlacementData(Place);
+
+
     return 0;
 }

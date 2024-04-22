@@ -9,7 +9,6 @@
 #include "../placement/placement.h"
 #include "../parser/parser.h"
 #include<ostream>
-#include<fstream>
 #include<string>
 #include<sstream>
 class exporter
