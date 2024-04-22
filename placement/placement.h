@@ -14,6 +14,16 @@ public:
         void Slover();    //主函数(!!!)
 
 
+        //得到私有数据
+        double getTDescentRate() const { return T_descent_rate; }
+        double getT() const { return T; }
+        double getCoolRate() const { return cool_rate; }
+        int getCost() const { return cost; }
+        int getBestCost() const { return bset_cost; }
+        std::vector<int> getPmosLoc() const { return pmos_loc; }
+        std::vector<int> getNmosLoc() const { return nmos_loc; }
+        std::vector<int> getBestPmosLoc() const { return best_pmos_loc; }
+        std::vector<int> getBestNmosLoc() const { return best_nmos_loc; }
 
 
 
