@@ -14,11 +14,9 @@ placement::placement(std::vector<net*> m_network) :network(m_network){};
 
 void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
 {
-    T=100+T_lambda*log(1+(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos)));
-    T_descent_rate=T_descent_lambda*exp(-(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos))); //数量越大下降越慢 温度高的时候尽可能小
-    std::cout<<"T="<<T<<" T_descent_rate="<<T_descent_rate<<std::endl;
-    std::cout<<(this_net->num_nmos+this_net->num_pmos)<<std::endl;
-    std::cout<<(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos))<<std::endl;
+    
+    T=100+T_lambda*log(1+(static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//类型转换
+    T_descent_rate=T_descent_lambda*exp(-(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//数量越大下降越慢 温度高的时候尽可能小
     
 
 }
@@ -229,14 +227,15 @@ void placement::Slover()
         nmos_loc.resize(network[a]->num_pmos);
         best_nmos_loc.resize(network[a]->num_nmos);
         best_pmos_loc.resize(network[a]->num_pmos);
-        std::cout<<"1 ";
+        std::cout<<"1"<<std::endl;//debug的 a==6时候会出现vectorout of range
         GenerateRandomSolutions();
+        std::cout<<"2"<<std::endl;
         layout(network[a]);
-        std::cout<<"2 ";
+        std::cout<<"3"<<std::endl;
+        std::cout<<"-------------退火--------------"<<a<<"-------------退火--------------"<<std::endl;
         init_SA(T_descent_rate,T,network[a]);//开始模拟退火
-        std::cout<<"3 ";
         run_SA(T_descent_rate,T,network[a]);
-        std::cout<<"4 ";
+        std::cout<<"end"<<std::endl;
 
 
     }
@@ -287,12 +286,11 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 {
    double max_T = T;// 定义一个最大温度
     std::cout<<T/max_T<<" "<<std::endl;
-    while(T>0.05)
+    while(T>1.05)
     {
         double differ_T=0;
-        while(differ_T<(-5*T/max_T))
+        while(differ_T<(5*T/max_T)&&T>1)
         {
-            if(T<1) break;
             std::cout<<T<<" ";
             double temp_T = T;
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
@@ -304,7 +302,7 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 
     }
 
-
+    
 };
 
 
