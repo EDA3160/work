@@ -14,8 +14,13 @@ placement::placement(std::vector<net*> m_network) :network(m_network){};
 
 void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
 {
-    T=100+T_lambda*log(1+1/(this_net->num_nmos+this_net->num_pmos));
-    T_descent_rate=T_descent_lambda*exp(1/(this_net->num_nmos+this_net->num_pmos)); //数量越大下降越慢 温度高的时候尽可能小
+    T=100+T_lambda*log(1+(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos)));
+    T_descent_rate=T_descent_lambda*exp(-(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos))); //数量越大下降越慢 温度高的时候尽可能小
+    std::cout<<"T="<<T<<" T_descent_rate="<<T_descent_rate<<std::endl;
+    std::cout<<(this_net->num_nmos+this_net->num_pmos)<<std::endl;
+    std::cout<<(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos))<<std::endl;
+    
+
 }
 
 
@@ -62,6 +67,7 @@ double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //�
     {
         mos->m_f^=mos->m_f; //旋转
         std::swap(mos->m_drain,mos->m_source);//由于cost函数的单调目前这玩意好像没有什么实质性作用啊啊(#｀-_ゝ-)
+        layout(this_net);
         j=get_cost_0(this_net);
     }
     differ_j_i=j-i;
@@ -140,7 +146,7 @@ void placement::layout(net* this_net)
     int x_n=1;
     std::string p_right;
     std::string n_right;
-
+    
     while (num_nmos < this_net->num_nmos && num_pmos < this_net->num_pmos)
     {
         //除布局第一个mos外，布局mos时判断是否可重叠
@@ -210,7 +216,7 @@ void placement::layout(net* this_net)
 
 
 
-
+    
 
 }
 
@@ -223,11 +229,14 @@ void placement::Slover()
         nmos_loc.resize(network[a]->num_pmos);
         best_nmos_loc.resize(network[a]->num_nmos);
         best_pmos_loc.resize(network[a]->num_pmos);
+        std::cout<<"1 ";
         GenerateRandomSolutions();
         layout(network[a]);
-        
+        std::cout<<"2 ";
         init_SA(T_descent_rate,T,network[a]);//开始模拟退火
+        std::cout<<"3 ";
         run_SA(T_descent_rate,T,network[a]);
+        std::cout<<"4 ";
 
 
     }
@@ -277,16 +286,18 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 {
    double max_T = T;// 定义一个最大温度
-
+    std::cout<<T/max_T<<" "<<std::endl;
     while(T>0.05)
     {
         double differ_T=0;
         while(differ_T<(-5*T/max_T))
         {
+            if(T<1) break;
+            std::cout<<T<<" ";
             double temp_T = T;
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
-            differ_T=T*T_descent_rate;//温度下降量
-            
+            differ_T=T*(1-T_descent_rate);//温度下降量
+            std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
 
         }
         T-=differ_T;
