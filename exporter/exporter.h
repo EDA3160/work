@@ -9,13 +9,17 @@
 #include "../placement/placement.h"
 #include "../parser/parser.h"
 #include<ostream>
-#include<string>
 #include<sstream>
+#include<string>
+#include<vector>
 class exporter
 {
 public:
-  void exportPlacementData(const placement& placementData);
+  exporter(std::vector<net*> exportNet);
+  void exportPlacementData(const placement& placementData,std::vector<net*> exporterNet);
 
+private:
+  std::vector<net*> exportNet;
 
 };
 

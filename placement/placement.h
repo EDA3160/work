@@ -22,6 +22,7 @@ public:
         int getBestCost() const { return bset_cost; }
         std::vector<int> getPmosLoc() const { return pmos_loc; }
         std::vector<int> getNmosLoc() const { return nmos_loc; }
+        //有用数据
         std::vector<int> getBestPmosLoc() const { return best_pmos_loc; }
         std::vector<int> getBestNmosLoc() const { return best_nmos_loc; }
 

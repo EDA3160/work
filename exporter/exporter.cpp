@@ -8,16 +8,22 @@
 #include <iostream>
 #include <fstream>
 
-void exporter::exportPlacementData(const placement& placementData) {
-  std::ofstream outFile("placementData.spi");
+exporter::exporter(std::vector<net*> m_network) :exportNet(exportNet){};
 
+void exporter::exportPlacementData(const placement& placementData, std::vector<net*> exporterNet) {
+  std::ofstream outFile("placementData.json");
 
-  outFile << "下降率: " << placementData.getTDescentRate() << std::endl;
-  outFile << "温度: " << placementData.getT() << std::endl;
-  outFile << "冷却率: " << placementData.getCoolRate() << std::endl;
-  outFile << "成本: " << placementData.getCost() << std::endl;
-  outFile << "最佳成本: " << placementData.getBestCost() << std::endl;
-  outFile << "pmos位置: ";
+        outFile << "最佳布局: " << std::endl;
+        for (int i = 0; i < exporterNet.size(); i++) {
+                outFile << "net" << i << ": ";
+                for (int j = 0; j < exporterNet[i]->num_pmos; j++) {
+                        outFile << "pmos" << j << "位置: " << exporterNet[i]->pmos[j]->m_x << " ";
+                }
+                for (int j = 0; j < exporterNet[i]->num_nmos; j++) {
+                        outFile << "nmos" << j << "位置: " << exporterNet[i]->nmos[j]->m_x << " ";
+                }
+                outFile << std::endl;
+        }
 
   outFile << "最佳pmos位置: ";
   for (int loc : placementData.getBestPmosLoc()) {
