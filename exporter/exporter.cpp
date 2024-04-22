@@ -3,3 +3,6 @@
 //
 #include "exporter.h"
 exporter::exporter() {}
+std::vector<net*> exporter::m_exporter(){
+
+}

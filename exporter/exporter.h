@@ -15,7 +15,7 @@
 class exporter
 {
 public:
-
+  std::vector<net*> m_exporter();
 
   exporter();
 };
