@@ -1,6 +1,7 @@
 #include<iostream>
 #include"parser/parser.h"
 #include"placement/placement.h"
+#include"exporter/exporter.h"
 int main()
 {
     parser p;
