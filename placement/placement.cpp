@@ -226,6 +226,8 @@ void placement::Slover()
         GenerateRandomSolutions();
         layout(network[a]);
         
+        init_SA(T_descent_rate,T,network[a]);//开始模拟退火
+        run_SA(T_descent_rate,T,network[a]);
 
 
     }
@@ -245,7 +247,7 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     {
         net temp_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原  所以database我重载=号了
         action_int=int_u(e);
-        accept_rate=get_cost_1(action_int,this_net,nmos,eff_T);//获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
+        accept_rate=get_cost_1(action_int,this_net,nmos,eff_T);//进行随机解 并获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
         if(accept_rate<1&&action_int)
         {
             if(eff_T*(accept_rate) < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
