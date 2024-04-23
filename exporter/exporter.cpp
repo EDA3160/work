@@ -5,7 +5,6 @@
 #include "../placement/placement.h"
 #include "../parser/parser.h"
 #include "../database/database.h"
-#include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
 
