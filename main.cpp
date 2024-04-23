@@ -61,8 +61,8 @@ int main()
     }
 
 
-    exporter e;
-    e.exportPlacementData(Place,std::vector<net*> exporterNet);
+//    exporter e;
+//    e.exportPlacementData(Place,std::vector<net*> exporterNet);
 
 
     return 0;
