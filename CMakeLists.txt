@@ -16,3 +16,9 @@ add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LI
         exporter/exporter.h)
 
 include_directories("database" "parser"  "parser"  "placement")
+
+find_package(nlohmann_json CONFIG REQUIRED)
+target_link_libraries(project PRIVATE nlohmann_json::nlohmann_json)
+
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
+        CACHE STRING "Vcpkg toolchain file")

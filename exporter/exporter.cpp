@@ -5,10 +5,11 @@
 #include "../placement/placement.h"
 #include "../parser/parser.h"
 #include "../database/database.h"
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
 
-exporter::exporter(std::vector<net*> m_network) :exportNet(exportNet){};
+exporter::exporter(std::vector<net*> network) :exportNet(network){};
 
 void exporter::exportPlacementData(const placement& placementData, std::vector<net*> exporterNet) {
   std::ofstream outFile("placementData.json");

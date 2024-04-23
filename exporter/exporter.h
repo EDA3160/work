@@ -15,7 +15,7 @@
 class exporter
 {
 public:
-  exporter(std::vector<net*> exportNet);
+  exporter(std::vector<net*> network);
   void exportPlacementData(const placement& placementData,std::vector<net*> exporterNet);
 
 private:
