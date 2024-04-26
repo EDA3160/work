@@ -32,7 +32,7 @@ double placement::get_cost_0(net* this_net){
     {
         f_cost=std::max(f_cost,this_net->nmos[i]->m_x);
     }
-    return f_cost*this_net->num_nmos+this_net->num_pmos;
+    return f_cost;
 
 
 }
@@ -44,33 +44,33 @@ double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //�
     double differ_j_i;//两次代价的差值
     std::default_random_engine e;//给随机数
     std::uniform_int_distribution<int> axis(0,this_net->num_nmos); // 左闭右闭区间
-    
+
     if(action==0)
     {
         differ_j_i=0;
     }
+//    else if(action==1)
+//    {
+//        mos->m_x++;
+//        layout(this_net);
+//        j=get_cost_0(this_net);
+//    }
     else if(action==1)
-    {
-        mos->m_x++;
-        layout(this_net);
-        j=get_cost_0(this_net);
-    }
-    else if(action==2)
     {
         swap_mos();
         layout(this_net);
         j=get_cost_0(this_net);
     }
-    else if(action==3)
+    else if(action==2)
     {
-        mos->m_f^=mos->m_f; //旋转
+        mos->m_f^=1; //旋转
         std::swap(mos->m_drain,mos->m_source);//由于cost函数的单调目前这玩意好像没有什么实质性作用啊啊(#｀-_ゝ-)
         layout(this_net);
         j=get_cost_0(this_net);
     }
     differ_j_i=j-i;
     if(differ_j_i>=0)
-    return 1;
+        return 1;
     return exp((differ_j_i))*eff_T;  //差别越小接受率越高 differ_j_i不为1是都是负数 越接近0返回的值越接近1也越容易被接受 eff_T是因为温度越小越难接受差解
 }                                    
 
@@ -245,9 +245,9 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 {
     std::default_random_engine e;//给随机数
     std::uniform_real_distribution<double> double_u(0,1); // 左闭右闭区间
-    std::uniform_int_distribution<int> int_u(0,3);//1是移动 2是交换 3是反转  0是不动
+    std::uniform_int_distribution<int> int_u(0,2);//1是移动 2是交换 3是反转  0是不动
     e.seed(time(0));
-    double tem=get_cost_0(this_net);
+    double temp=get_cost_0(this_net);
     double eff_T = T/max_T; //反应退火的进程 温度越低越小
     int action_int;
     double accept_rate;
@@ -278,24 +278,23 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
         }
     }
 
-    return  T_descent_rate*(exp((get_cost_0(this_net)-tem)/tem)); //根据全局的好坏来调整下降率 cost0怎么归一
+    return  T_descent_rate*(exp((get_cost_0(this_net)-temp)/temp)); //根据全局的好坏来调整下降率 cost0怎么归一
 
 }
 
 void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 {
    double max_T = T;// 定义一个最大温度
-    std::cout<<T/max_T<<" "<<std::endl;
+    //std::cout<<T/max_T<<" "<<std::endl;
     while(T>1.05)
     {
         double differ_T=0;
         while(differ_T<(5*T/max_T)&&T>1)
         {
-            std::cout<<T<<" ";
-            double temp_T = T;
+            //std::cout<<T<<" ";
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
             differ_T=T*(1-T_descent_rate);//温度下降量
-            std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
+            //std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
 
         }
         T-=differ_T;
