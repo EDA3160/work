@@ -38,6 +38,7 @@ int main()
 //            std::cout << "f:" <<hello[i]->nmos[j]->m_f<<std::endl;
 //        }
 //    }
+
     placement Place(hello);
     Place.Slover();
     for(int i = 0;i < a ;i++)

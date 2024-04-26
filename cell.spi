@@ -1,22 +1,25 @@
-.SUBCKT AN2D2 A1 A2 Z VDD VSS
-MM9 net14 A2 VSS VSS nch_mac l=30.0n w=0.14u
-MM8 net26 A1 net14 VSS nch_mac l=30.0n w=0.14u
-MM5 Z net26 VSS VSS nch_mac l=30.0n w=0.14u 
-MM5_2 Z net26 VSS VSS nch_mac l=30.0n w=0.14u 
-MM6 net26 A1 VDD VDD pch_mac l=30.0n w=170.0n
-MM7 net26 A2 VDD VDD pch_mac l=30.0n w=0.17u
-MM4 Z net26 VDD VDD pch_mac l=30.0n w=0.17u 
-MM4_2 Z net26 VDD VDD pch_mac l=30.0n w=0.17u 
-.ENDS
-.SUBCKT AN3D2 A1 A2 A3 Z VDD VSS
-MM13 net028 A2 net024 VSS nch_mac l=30.0n w=0.14u
-MM14 net26 A1 net028 VSS nch_mac l=30.0n w=0.14u
-MM12 net024 A3 VSS VSS nch_mac l=30.0n w=0.14u
-MM5 Z net26 VSS VSS nch_mac l=30.0n w=0.14u 
-MM5_2 Z net26 VSS VSS nch_mac l=30.0n w=0.14u 
-MM10 net26 A2 VDD VDD pch_mac l=30.0n w=0.17u
-MM4 Z net26 VDD VDD pch_mac l=30.0n w=0.17u 
-MM4_2 Z net26 VDD VDD pch_mac l=30.0n w=0.17u 
-MM15 net26 A3 VDD VDD pch_mac l=30.0n w=0.17u
-MM11 net26 A1 VDD VDD pch_mac l=30.0n w=0.17u
+.SUBCKT AOI211OPTREPBD2 A1 A2 B C ZN VDD VSS
+MP11_1 net051 A1 VDD VDD pch_mac l=30n w=170.0n
+MP11_2 net051 A1 VDD VDD pch_mac l=30n w=170.0n
+MP11_3 net051 A1 VDD VDD pch_mac l=30n w=170.0n
+MP11_4 net051 A1 VDD VDD pch_mac l=30n w=170.0n
+MP31_1 ZN B net037 VDD pch_mac l=30n w=170.0n
+MP31_2 ZN B net037 VDD pch_mac l=30n w=170.0n
+MP21_1 net037 C net051 VDD pch_mac l=30n w=170.0n
+MP21_2 net037 C net051 VDD pch_mac l=30n w=170.0n
+MP21_3 net037 C net051 VDD pch_mac l=30n w=170.0n
+MP12_1 net051 A2 VDD VDD pch_mac l=30n w=170.0n
+MP12_2 net051 A2 VDD VDD pch_mac l=30n w=170.0n
+MP12_3 net051 A2 VDD VDD pch_mac l=30n w=170.0n
+MP12_4 net051 A2 VDD VDD pch_mac l=30n w=170.0n
+MN12_1 ZN B VSS VSS nch_mac l=30n w=140.0n
+MN12_2 ZN B VSS VSS nch_mac l=30n w=140.0n
+MN11_1 ZN A1 net022 VSS nch_mac l=30n w=140.0n
+MN11_2 ZN A1 net022 VSS nch_mac l=30n w=140.0n
+MN21_1 net022 A2 VSS VSS nch_mac l=30n w=140.0n
+MN21_2 net022 A2 VSS VSS nch_mac l=30n w=140.0n
+MN21_3 net022 A2 VSS VSS nch_mac l=30n w=140.0n
+MN21_4 net022 A2 VSS VSS nch_mac l=30n w=140.0n
+MN13_1 ZN C VSS VSS nch_mac l=30n w=140.0n
+MN13_2 ZN C VSS VSS nch_mac l=30n w=140.0n
 .ENDS

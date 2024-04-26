@@ -14,7 +14,7 @@ placement::placement(std::vector<net*> m_network) :network(m_network){};
 
 void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
 {
-    
+    std::cout<<"run_into_init_SA"<<std::endl;
     T=100+T_lambda*log(1+(static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//类型转换
     T_descent_rate=T_descent_lambda*exp(-(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//数量越大下降越慢 温度高的时候尽可能小
     
@@ -69,7 +69,7 @@ double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //�
         j=get_cost_0(this_net);
     }
     differ_j_i=j-i;
-    if(differ_j_i>=0)
+    if(differ_j_i<=0)
         return 1;
     return exp((differ_j_i))*eff_T;  //差别越小接受率越高 differ_j_i不为1是都是负数 越接近0返回的值越接近1也越容易被接受 eff_T是因为温度越小越难接受差解
 }                                    
@@ -127,6 +127,7 @@ void placement::GenerateRandomSolutions()
                 pmos_loc[i]=i;
         }
         std::shuffle(pmos_loc.begin(), pmos_loc.end(),rng);
+
         for(int i=0;i<nmos_loc.size();i++)
         {
             nmos_loc[i]=i;
@@ -147,10 +148,12 @@ void placement::layout(net* this_net)
     
     while (num_nmos < this_net->num_nmos && num_pmos < this_net->num_pmos)
     {
+
         //除布局第一个mos外，布局mos时判断是否可重叠
         if(num_pmos>0)
         {
             //不可重叠
+
             if(this_net->pmos[pmos_loc[num_pmos]]->m_source!=p_right){
                 x_p++;
             }
@@ -160,14 +163,18 @@ void placement::layout(net* this_net)
             }
 
         }
+
         //布局pmos
         this_net->pmos[pmos_loc[num_pmos]]->m_x=x_p++;
 
         if(num_nmos>0)
         {
+
             if(this_net->nmos[nmos_loc[num_nmos]]->m_source!=n_right){
                 x_n++;
+
             }
+
             else if(x_n==this_net->pmos[pmos_loc[num_pmos-1]]->m_x&&this_net->pmos[pmos_loc[num_pmos-1]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
                 x_n++;
             }
@@ -175,11 +182,14 @@ void placement::layout(net* this_net)
 
 
         //判断栅极是否可连接
+
         if(x_n==this_net->pmos[pmos_loc[num_pmos]]->m_x&&this_net->pmos[pmos_loc[num_pmos]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
             x_n++;
         }
         //布局nmos
+
         this_net->nmos[nmos_loc[num_nmos]]->m_x=x_n++;
+
         //记录右端线网
         p_right=this_net->pmos[pmos_loc[num_pmos]]->m_drain;
         n_right=this_net->nmos[nmos_loc[num_nmos]]->m_drain;
@@ -190,6 +200,7 @@ void placement::layout(net* this_net)
     //nmos布局完pmos剩余的情况
     while (num_pmos<this_net->num_pmos)
     {
+
         if(num_pmos>0)
         {
             if(this_net->pmos[pmos_loc[num_pmos]]->m_source!=p_right)
@@ -202,6 +213,7 @@ void placement::layout(net* this_net)
     //pmos布局完nmos剩余的情况
     while (num_nmos<this_net->num_nmos)
     {
+
         if(num_nmos>0)
         {
             if(this_net->nmos[nmos_loc[num_nmos]]->m_source!=n_right)
@@ -210,6 +222,7 @@ void placement::layout(net* this_net)
         this_net->nmos[nmos_loc[num_nmos]]->m_x=x_n++;
         n_right=this_net->nmos[nmos_loc[num_nmos]]->m_drain;
         num_nmos++;
+
     }
 
 
@@ -223,8 +236,10 @@ void placement::Slover()
     srand(time(nullptr));
     for(int a=0;a<network.size();a++)
     {
-        pmos_loc.resize(network[a]->num_nmos);
-        nmos_loc.resize(network[a]->num_pmos);
+        std::cout<<"a="<<a<<"  "<<network[a]->name<<std::endl;
+
+        pmos_loc.resize(network[a]->num_pmos);
+        nmos_loc.resize(network[a]->num_nmos);
         best_nmos_loc.resize(network[a]->num_nmos);
         best_pmos_loc.resize(network[a]->num_pmos);
         std::cout<<"1"<<std::endl;//debug的 a==6时候会出现vectorout of range
@@ -232,9 +247,17 @@ void placement::Slover()
         std::cout<<"2"<<std::endl;
         layout(network[a]);
         std::cout<<"3"<<std::endl;
-        std::cout<<"-------------退火--------------"<<a<<"-------------退火--------------"<<std::endl;
         init_SA(T_descent_rate,T,network[a]);//开始模拟退火
         run_SA(T_descent_rate,T,network[a]);
+        for(int i : pmos_loc){
+            std::cout<<i<<" ";
+        }
+        std::cout<<"\n";
+        for(int i: nmos_loc){
+            std::cout<<i<<" ";
+        }
+        std::cout<<"\n";
+
         std::cout<<"end"<<std::endl;
 
 
@@ -284,13 +307,18 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 
 void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 {
-   double max_T = T;// 定义一个最大温度
+    std::cout<<"run_into_run_SA"<<std::endl;
+    double max_T = T;// 定义一个最大温度
     //std::cout<<T/max_T<<" "<<std::endl;
+    int count_in=1;
+    int count_out=1;
     while(T>1.05)
     {
+
         double differ_T=0;
         while(differ_T<(5*T/max_T)&&T>1)
         {
+            count_in++;
             //std::cout<<T<<" ";
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
             differ_T=T*(1-T_descent_rate);//温度下降量
@@ -300,6 +328,7 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
         T-=differ_T;
 
     }
+    std::cout<<count_in;
 
     
 };
