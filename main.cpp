@@ -2,6 +2,7 @@
 #include"parser/parser.h"
 #include"placement/placement.h"
 #include"exporter/exporter.h"
+
 int main()
 {
     parser p;
@@ -41,29 +42,32 @@ int main()
 
     placement Place(hello);
     Place.Slover();
-    for(int i = 0;i < a ;i++)
-    {
-        std::cout<<"name:" << hello[i]->name <<std::endl;
-        std::cout<<"------------------------------------" <<std::endl;
-        std::cout << "num_pmos:" <<hello[i]->num_pmos <<std::endl;
-        for(int j = 0; j < (hello[i]->num_pmos);j++)
-        {
-            std::cout << "name:" <<hello[i]->pmos[j]->m_name <<std::endl;
-            std::cout << "x:"<<hello[i]->pmos[j]->m_x<<std::endl;
-            std::cout << "f:" <<hello[i]->pmos[j]->m_f<<std::endl;
-        }
-        std::cout << "num_nmos:" <<hello[i]->num_nmos <<std::endl;
-        for(int j = 0; j < (hello[i]->num_nmos);j++)
-        {
-            std::cout << "name:" <<hello[i]->nmos[j]->m_name <<std::endl;
-            std::cout << "x:"<<hello[i]->nmos[j]->m_x<<std::endl;
-            std::cout << "f:" <<hello[i]->nmos[j]->m_f<<std::endl;
-        }
-    }
+//    for(int i = 0;i < a ;i++)
+//    {
+//        std::cout<<"name:" << hello[i]->name <<std::endl;
+//        std::cout<<"------------------------------------" <<std::endl;
+//        std::cout << "num_pmos:" <<hello[i]->num_pmos <<std::endl;
+//        for(int j = 0; j < (hello[i]->num_pmos);j++)
+//        {
+//            std::cout << "name:" <<hello[i]->pmos[j]->m_name <<std::endl;
+//            std::cout << "x:"<<hello[i]->pmos[j]->m_x<<std::endl;
+//            std::cout << "f:" <<hello[i]->pmos[j]->m_f<<std::endl;
+//        }
+//        std::cout << "num_nmos:" <<hello[i]->num_nmos <<std::endl;
+//        for(int j = 0; j < (hello[i]->num_nmos);j++)
+//        {
+//            std::cout << "name:" <<hello[i]->nmos[j]->m_name <<std::endl;
+//            std::cout << "x:"<<hello[i]->nmos[j]->m_x<<std::endl;
+//            std::cout << "f:" <<hello[i]->nmos[j]->m_f<<std::endl;
+//        }
+//    }
 
 
-//    exporter e;
-//    e.exportPlacementData(Place,std::vector<net*> exporterNet);
+    exporter e(hello);
+    e.exportPlacementData(Place, std::vector<net*>{hello});
+
+
+
 
 
     return 0;
