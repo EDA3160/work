@@ -1,7 +1,7 @@
-#include<iostream>
 #include"parser/parser.h"
 #include"placement/placement.h"
 #include"exporter/exporter.h"
+#include"database/database.h"
 
 int main()
 {
@@ -64,7 +64,7 @@ int main()
 
 
     exporter e(hello);
-    e.exportPlacementData(Place, std::vector<net*>{hello});
+    e.exportPlacementData(std::vector<net*>(hello));
 
 
 
