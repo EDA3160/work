@@ -16,8 +16,7 @@ void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
 {
     std::cout<<"run_into_init_SA"<<std::endl;
     T=100+T_lambda*log(1+(static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//类型转换
-    T_descent_rate=T_descent_lambda*exp(-(1/static_cast<double>(this_net->num_nmos+this_net->num_pmos)));//数量越大下降越慢 温度高的时候尽可能小
-    
+    T_descent_rate=0.95;
 
 }
 
@@ -36,7 +35,7 @@ double placement::get_cost_0(net* this_net){
 
 
 }
-double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //这里传了这么多参数进来是想就算局部变化量的 我鸽了：）
+double placement::get_cost_1(int action,net* this_net,mos* mos) //这里传了这么多参数进来是想就算局部变化量的 我鸽了：）
 {
     
     double i =get_cost_0(this_net);//前代价
@@ -71,7 +70,7 @@ double placement::get_cost_1(int action,net* this_net,mos* mos,double eff_T) //�
     differ_j_i=j-i;
     if(differ_j_i<=0)
         return 1;
-    return exp((differ_j_i))*eff_T;  //差别越小接受率越高 differ_j_i不为1是都是负数 越接近0返回的值越接近1也越容易被接受 eff_T是因为温度越小越难接受差解
+    return exp((differ_j_i));  //差别越小接受率越高 differ_j_i不为1是都是负数 越接近0返回的值越接近1也越容易被接受 eff_T是因为温度越小越难接受差解
 }                                    
 
 void placement::swap_mos(){
@@ -278,7 +277,7 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     {
         net temp_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原  所以database我重载=号了
         action_int=int_u(e);
-        accept_rate=get_cost_1(action_int,this_net,nmos,eff_T);//进行随机解 并获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
+        accept_rate=get_cost_1(action_int,this_net,nmos);//进行随机解 并获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
         if(accept_rate<1&&action_int)
         {
             if(eff_T*(accept_rate) < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
@@ -291,7 +290,7 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     {
         net temp_net = *this_net;
         action_int=int_u(e);
-        accept_rate=get_cost_1(action_int,this_net,pmos,eff_T);
+        accept_rate=get_cost_1(action_int,this_net,pmos);
         if(accept_rate<1)
         {
             if(eff_T*(accept_rate) < double_u(e))  
@@ -312,18 +311,19 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
     //std::cout<<T/max_T<<" "<<std::endl;
     int count_in=1;
     int count_out=1;
-    while(T>1.05)
+    int i = 0;
+    while(T>0.05)
     {
-
+        i=0;
         double differ_T=0;
-        while(differ_T<(5*T/max_T)&&T>1)
+        while(i<100)
         {
             count_in++;
             //std::cout<<T<<" ";
             T_descent_rate=action(max_T,T_descent_rate,T,this_net);
             differ_T=T*(1-T_descent_rate);//温度下降量
             //std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
-
+            i++;
         }
         T-=differ_T;
 

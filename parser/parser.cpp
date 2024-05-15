@@ -25,7 +25,7 @@ std::vector<net*> parser::m_parser()
     std::vector<mos*> pmos;
     std::vector<mos*> nmos;
     std::ifstream ifs;
-    ifs.open("..//cell.spi",std::ios::in);
+    ifs.open("..//cells.spi",std::ios::in);
     if(!ifs.is_open())
     {
         std::cout << "fail to open the file" << std::endl;
