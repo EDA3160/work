@@ -63,8 +63,8 @@ int main()
 //    }
 
 
-    // exporter e(hello);
-    // e.exportPlacementData(std::vector<net*>(hello));
+     exporter e(hello);
+     e.exportPlacementData(std::vector<net*>(hello));
 
     std::cout<<"finish"<<std::endl;
 
