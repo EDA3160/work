@@ -320,8 +320,8 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
         {
             count_in++;
             //std::cout<<T<<" ";
-            T_descent_rate=action(max_T,T_descent_rate,T,this_net);
-            differ_T=T*(1-T_descent_rate);//温度下降量
+            action(max_T,T_descent_rate,T,this_net);
+            differ_T=T*T_descent_rate;//温度下降量
             //std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
             i++;
         }
