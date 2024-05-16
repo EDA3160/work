@@ -81,7 +81,7 @@ void placement::swap_mos(){
     {
         int random1=rand()%pmos_loc.size();
         int random2=rand()%pmos_loc.size();
-        while (random1==random2)
+        // while (random1==random2)
             random2=rand()%pmos_loc.size();
         std::swap(pmos_loc[random1],pmos_loc[random2]);
     }
@@ -89,7 +89,7 @@ void placement::swap_mos(){
     {
         int random1=rand()%nmos_loc.size();
         int random2=rand()%nmos_loc.size();
-        while (random1==random2)
+        // while (random1==random2)
             random2=rand()%nmos_loc.size();
         std::swap(nmos_loc[random1],nmos_loc[random2]);
     }
@@ -99,7 +99,7 @@ void placement::swap_mos(){
         {
             int random1=rand()%pmos_loc.size();
             int random2=rand()%pmos_loc.size();
-            while (random1==random2)
+            // while (random1==random2)
                 random2=rand()%pmos_loc.size();
             std::swap(pmos_loc[random1],pmos_loc[random2]);
             std::swap(nmos_loc[random1],nmos_loc[random2]);
@@ -107,7 +107,7 @@ void placement::swap_mos(){
         else{
             int random1=rand()%nmos_loc.size();
             int random2=rand()%nmos_loc.size();
-            while (random1==random2)
+            // while (random1==random2)
                 random2=rand()%nmos_loc.size();
             std::swap(pmos_loc[random1],pmos_loc[random2]);
             std::swap(nmos_loc[random1],nmos_loc[random2]);
@@ -247,6 +247,7 @@ void placement::Slover()
         layout(network[a]);
         std::cout<<"3"<<std::endl;
         init_SA(T_descent_rate,T,network[a]);//开始模拟退火
+        std::cout<<T<<std::endl;
         run_SA(T_descent_rate,T,network[a]);
         for(int i : pmos_loc){
             std::cout<<i<<" ";
@@ -312,23 +313,23 @@ void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
     int count_in=1;
     int count_out=1;
     int i = 0;
-    while(T>0.05)
+    while(T>1)
     {
         i=0;
         double differ_T=0;
-        while(i<100)
+        while(i<5)
         {
             count_in++;
             //std::cout<<T<<" ";
             action(max_T,T_descent_rate,T,this_net);
-            differ_T=T*T_descent_rate;//温度下降量
+            differ_T=T*(1-T_descent_rate);//温度下降量
             //std::cout<<T*(1-T_descent_rate)<<" "<<std::endl;
             i++;
         }
         T-=differ_T;
 
     }
-    std::cout<<count_in;
+    std::cout<<count_in<<std::endl;
 
     
 };

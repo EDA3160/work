@@ -4,7 +4,7 @@
 #include "../database/database.h"
 #include <string>
 #include <vector>
-#define T_lambda 50  //初始化温度参数
+#define T_lambda 100  //初始化温度参数
 #define T_descent_lambda 0.9  //初始化下降温度参数  //这两个参数只在初始化时候出现过，没什么深意
 #define T_min 0
 class placement
