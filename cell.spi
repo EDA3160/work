@@ -20,3 +20,43 @@ MM4_2 Z net26 VDD VDD pch_mac l=30.0n w=0.17u
 MM15 net26 A3 VDD VDD pch_mac l=30.0n w=0.17u
 MM11 net26 A1 VDD VDD pch_mac l=30.0n w=0.17u
 .ENDS
+.SUBCKT AN4D2 A1 A2 A3 A4 Z VDD VSS
+MM5 Z net26 VSS VSS nch_mac l=30.0n w=0.14u
+MM5_2 Z net26 VSS VSS nch_mac l=30.0n w=0.14u
+MM22 net26 A1 net030 VSS nch_mac l=30.0n w=0.14u
+MM20 net034 A3 net038 VSS nch_mac l=30.0n w=0.14u
+MM19 net030 A2 net034 VSS nch_mac l=30.0n w=140.0n
+MM21 net038 A4 VSS VSS nch_mac l=30.0n w=0.14u
+MM23 net26 A4 VDD VDD pch_mac l=30.0n w=0.17u
+MM4 Z net26 VDD VDD pch_mac l=30.0n w=0.17u
+MM4_2 Z net26 VDD VDD pch_mac l=30.0n w=0.17u
+MM16 net26 A3 VDD VDD pch_mac l=30.0n w=0.17u
+MM17 net26 A1 VDD VDD pch_mac l=30.0n w=0.17u
+MM18 net26 A2 VDD VDD pch_mac l=30.0n w=0.17u
+.ENDS
+.SUBCKT AO211D2 A1 A2 B C Z VDD VSS
+MM5 Z net44 VSS VSS nch_mac l=30.0n w=0.14u
+MM5_2 Z net44 VSS VSS nch_mac l=30.0n w=0.14u
+MM0 net44 C VSS VSS nch_mac l=30.0n w=0.14u
+MM3 net44 B VSS VSS nch_mac l=30.0n w=0.14u
+MM8 net44 A1 net24 VSS nch_mac l=30.0n w=0.14u
+MM9 net24 A2 VSS VSS nch_mac l=30.0n w=0.14u
+MM4 Z net44 VDD VDD pch_mac l=30.0n w=0.17u
+MM4_2 Z net44 VDD VDD pch_mac l=30.0n w=0.17u
+MM1 net39 C VDD VDD pch_mac l=30.0n w=0.17u
+MM2 net47 B net39 VDD pch_mac l=30.0n w=0.17u
+MM6 net44 A1 net47 VDD pch_mac l=30.0n w=170.0n
+MM7 net44 A2 net47 VDD pch_mac l=30.0n w=0.17u
+.ENDS
+.SUBCKT AO21D2 A1 A2 B Z VDD VSS
+MM2 net7 A2 VSS VSS nch_mac l=30.0n w=0.14u
+MM1 net11 A1 net7 VSS nch_mac l=30.0n w=0.14u
+MM0 net11 B VSS VSS nch_mac l=30.0n w=0.14u
+MM5 Z net11 VSS VSS nch_mac l=30.0n w=0.14u
+MM5_2 Z net11 VSS VSS nch_mac l=30.0n w=0.14u
+MM7 net34 B VDD VDD pch_mac l=30.0n w=0.17u
+MM6 net11 A2 net34 VDD pch_mac l=30.0n w=170.0n
+MM3 net11 A1 net34 VDD pch_mac l=30.0n w=0.17u
+MM4 Z net11 VDD VDD pch_mac l=30.0n w=0.17u
+MM4_2 Z net11 VDD VDD pch_mac l=30.0n w=0.17u
+.ENDS
