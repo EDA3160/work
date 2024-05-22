@@ -3,7 +3,6 @@ project(project)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 
 aux_source_directory("database" SRC_LIST0)
 aux_source_directory("exporter" SRC_LIST1)
@@ -16,4 +15,7 @@ add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LI
 
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(project PRIVATE nlohmann_json::nlohmann_json)
+
+add_library(json_includes INTERFACE)
+target_include_directories(json_includes INTERFACE ${json_INCLUDE_DIRS})
 
