@@ -13,8 +13,8 @@ include_directories("database" "exporter" "parser" "placement")
 
 add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST4})
 
-find_package(nlohmann_json CONFIG REQUIRED)
-target_link_libraries(project PRIVATE nlohmann_json::nlohmann_json)
+find_package(nlohmann_json REQUIRED)
+target_link_libraries(project  nlohmann_json::nlohmann_json)
 
 add_library(json_includes INTERFACE)
 target_include_directories(json_includes INTERFACE ${json_INCLUDE_DIRS})
