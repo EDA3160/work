@@ -11,11 +11,12 @@ aux_source_directory("parser" SRC_LIST4)
 
 include_directories("database" "exporter" "parser" "placement")
 
-add_executable(project main.cpp  ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST4})
+add_executable(project main.cpp ${SRC_LIST0} ${SRC_LIST1} ${SRC_LIST2} ${SRC_LIST4})
 
 find_package(nlohmann_json REQUIRED)
-target_link_libraries(project  nlohmann_json::nlohmann_json)
+target_link_libraries(project nlohmann_json::nlohmann_json)
 
 add_library(json_includes INTERFACE)
-target_include_directories(json_includes INTERFACE ${json_INCLUDE_DIRS})
+target_include_directories(json_includes INTERFACE ${NLOHMANN_JSON_INCLUDE_DIRS})
+
 
