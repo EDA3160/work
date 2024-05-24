@@ -15,8 +15,8 @@ cell_name = sys.argv[2]
 
 width = -1
 for transistor_name, properties in placement.items():
-    if properties["x"] > width:
-        width = properties["x"]
+    if int(properties["x"]) > width:
+        width = int(properties["x"])
 
 fig, ax = plt.subplots(figsize=(width * 10 + 1, width * 2))
 

@@ -54,19 +54,19 @@ double placement::get_cost_1(int action,net* this_net,mos* mos) //这里传了�
 //        layout(this_net);
 //        j=get_cost_0(this_net);
 //    }
-    else if(action==1)
+    else if(action==1||action==2)
     {
         swap_mos();
         layout(this_net);
         j=get_cost_0(this_net);
     }
-    else if(action==2)
-    {
-        mos->m_f^=1; //旋转
-        std::swap(mos->m_drain,mos->m_source);//由于cost函数的单调目前这玩意好像没有什么实质性作用啊啊(#｀-_ゝ-)
-        layout(this_net);
-        j=get_cost_0(this_net);
-    }
+//    else if(action==2)
+//    {
+//        mos->m_f^=1; //旋转
+//        std::swap(mos->m_drain,mos->m_source);//由于cost函数的单调目前这玩意好像没有什么实质性作用啊啊(#｀-_ゝ-)
+//        layout(this_net);
+//        j=get_cost_0(this_net);
+//    }
     differ_j_i=j-i;
     if(differ_j_i<=0)
         return 1;
@@ -81,16 +81,16 @@ void placement::swap_mos(){
     {
         int random1=rand()%pmos_loc.size();
         int random2=rand()%pmos_loc.size();
-        // while (random1==random2)
-            random2=rand()%pmos_loc.size();
+
+
         std::swap(pmos_loc[random1],pmos_loc[random2]);
     }
     else if(method==1)
     {
         int random1=rand()%nmos_loc.size();
         int random2=rand()%nmos_loc.size();
-        // while (random1==random2)
-            random2=rand()%nmos_loc.size();
+
+
         std::swap(nmos_loc[random1],nmos_loc[random2]);
     }
     else if(method==2)
@@ -99,16 +99,14 @@ void placement::swap_mos(){
         {
             int random1=rand()%pmos_loc.size();
             int random2=rand()%pmos_loc.size();
-            // while (random1==random2)
-                random2=rand()%pmos_loc.size();
+
             std::swap(pmos_loc[random1],pmos_loc[random2]);
             std::swap(nmos_loc[random1],nmos_loc[random2]);
         }
         else{
             int random1=rand()%nmos_loc.size();
             int random2=rand()%nmos_loc.size();
-            // while (random1==random2)
-                random2=rand()%nmos_loc.size();
+
             std::swap(pmos_loc[random1],pmos_loc[random2]);
             std::swap(nmos_loc[random1],nmos_loc[random2]);
 
@@ -239,13 +237,15 @@ void placement::Slover()
 
         pmos_loc.resize(network[a]->num_pmos);
         nmos_loc.resize(network[a]->num_nmos);
+        temp_pmos_loc.resize(network[a]->num_pmos);
+        temp_nmos_loc.resize(network[a]->num_nmos);
         best_nmos_loc.resize(network[a]->num_nmos);
         best_pmos_loc.resize(network[a]->num_pmos);
-        std::cout<<"1"<<std::endl;//debug的 a==6时候会出现vectorout of range
+
         GenerateRandomSolutions();
-        std::cout<<"2"<<std::endl;
+
         layout(network[a]);
-        std::cout<<"3"<<std::endl;
+
         init_SA(T_descent_rate,T,network[a]);//开始模拟退火
         std::cout<<T<<std::endl;
         run_SA(T_descent_rate,T,network[a]);
@@ -257,7 +257,7 @@ void placement::Slover()
             std::cout<<i<<" ";
         }
         std::cout<<"\n";
-
+        std::cout<<get_cost_0(network[a])<<std::endl;
         std::cout<<"end"<<std::endl;
 
 
@@ -276,27 +276,31 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
     double accept_rate;
     for(auto& nmos:this_net->nmos)
     {
-        net temp_net = *this_net;//    需要给重载个赋值来存储临时的state 用于还原  所以database我重载=号了
+
+        temp_nmos_loc=nmos_loc;
+
         action_int=int_u(e);
         accept_rate=get_cost_1(action_int,this_net,nmos);//进行随机解 并获得局部更改后的代价参数 返回接受率 如果比原来更好就大于1
         if(accept_rate<1&&action_int)
         {
             if(eff_T*(accept_rate) < double_u(e))//不接受的话撤回操作   温度高的话接受率高    温度低接受率低    
             {
-                *this_net = temp_net;
+                nmos_loc=temp_nmos_loc;
+                layout(this_net);
             }
         }
     }
     for(auto& pmos:this_net->pmos)//   pmos同理
     {
-        net temp_net = *this_net;
+        temp_pmos_loc=pmos_loc;
         action_int=int_u(e);
         accept_rate=get_cost_1(action_int,this_net,pmos);
         if(accept_rate<1)
         {
             if(eff_T*(accept_rate) < double_u(e))  
             {
-                *this_net = temp_net;
+                pmos_loc=temp_pmos_loc;
+                layout(this_net);
             }
         }
     }
@@ -308,16 +312,16 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 void placement::run_SA(double &T_descent_rate,double &T,net* this_net)
 {
     std::cout<<"run_into_run_SA"<<std::endl;
-    double max_T = T;// 定义一个最大温度
+    double max_T = T*10;// 定义一个最大温度
     //std::cout<<T/max_T<<" "<<std::endl;
     int count_in=1;
     int count_out=1;
     int i = 0;
-    while(T>1)
+    while(T>0.001)
     {
         i=0;
         double differ_T=0;
-        while(i<5)
+        while(i<50)
         {
             count_in++;
             //std::cout<<T<<" ";
