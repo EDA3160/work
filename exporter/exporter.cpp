@@ -52,7 +52,7 @@ exporter::exporter(std::vector<net*> network) :exportNet(network){};
 
 
 void exporter::exportPlacementData(std::vector<net*> exporterNet) {
-  std::ofstream outFile("C:/Users/Defender/Desktop/project/work/placementData.json");
+  std::ofstream outFile("..//placementData.json");
   if(!outFile.is_open())
   {
     std::cout << "fail to open the file" << std::endl;

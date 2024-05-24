@@ -30,9 +30,11 @@ class net
 public:
     net();
 
-    net(int num_pmos,int num_nmos,std::vector<mos*> pmos,std::vector<mos*> nmos,std::string name);
+    net(int num_pmos,int num_nmos,const std::vector<mos*> pmos,const std::vector<mos*> nmos,const std::string name);
     net(const net& other);
     ~net();
+    std::vector<int> pmos_loc;
+    std::vector<int> nmos_loc;
     int num_pmos=0;
     std::vector<mos*> pmos;
     int num_nmos=0;

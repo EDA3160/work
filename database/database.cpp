@@ -26,13 +26,25 @@ net::net()
     this->num_nmos = 0;
     this->num_pmos = 0;
 }
-net::net(int num_pmos,int num_nmos,std::vector<mos*> pmos,std::vector<mos*> nmos,std::string name)
+net::net(int num_pmos, int num_nmos, const std::vector<mos*> pmos, const std::vector<mos*> nmos, const std::string name)
 {
     this->num_pmos = num_pmos;
     this->num_nmos = num_nmos;
-    this->pmos = pmos;
-    this->nmos = nmos;
+
+    this->pmos.resize(pmos.size());
+    std::copy(pmos.begin(), pmos.end(), this->pmos.begin());
+
+    this->nmos.resize(nmos.size());
+    std::copy(nmos.begin(), nmos.end(), this->nmos.begin());
+
     this->name = name;
+    this->pmos_loc.clear();
+    this->pmos_loc.resize(num_pmos);
+
+
+    this->nmos_loc.clear();
+    this->nmos_loc.resize(num_nmos);
+
 }
 net::net(const net& other)
 {
@@ -47,6 +59,13 @@ net::net(const net& other)
         this->nmos.push_back(new mos(*other.nmos[i]));
     }
     this->name = other.name;
+    this->pmos_loc.clear();
+    this->pmos_loc.resize(other.pmos_loc.size());
+    this->pmos_loc = other.pmos_loc;
+
+    this->nmos_loc.clear();
+    this->nmos_loc.resize(other.nmos_loc.size());
+    this->nmos_loc = other.nmos_loc;
 }
 
 net::~net() {
@@ -91,6 +110,13 @@ net& net::operator=(const net& other)
             mos* newPtr = new mos(*ptr);  // 使用默认的拷贝构造
             this->pmos.push_back(newPtr);     
         }
+        this->pmos_loc.clear();
+        this->pmos_loc.resize(other.pmos_loc.size());
+        this->pmos_loc = other.pmos_loc;
+
+        this->nmos_loc.clear();
+        this->nmos_loc.resize(other.nmos_loc.size());
+        this->nmos_loc = other.nmos_loc;
 
         return *this;
 }
