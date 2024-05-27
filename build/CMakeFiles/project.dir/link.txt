@@ -1,1 +1,0 @@
-/usr/bin/c++  -static CMakeFiles/project.dir/main.cpp.o CMakeFiles/project.dir/database/database.cpp.o CMakeFiles/project.dir/exporter/exporter.cpp.o CMakeFiles/project.dir/placement/placement.cpp.o CMakeFiles/project.dir/parser/parser.cpp.o -o project 
