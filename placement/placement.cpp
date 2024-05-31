@@ -18,6 +18,7 @@ void placement:: init_SA(double &T_descent_rate,double &T,net* this_net)
 
 
 double placement::get_cost_0(net* this_net){
+
     int f_cost=0;
     for(int i=0;i<this_net->num_pmos;i++)
     {
@@ -27,6 +28,7 @@ double placement::get_cost_0(net* this_net){
     {
         f_cost=std::max(f_cost,this_net->nmos[i]->m_x);
     }
+
     return f_cost;
 
 
@@ -70,6 +72,7 @@ double placement::get_cost_1(int action,net* this_net,mos* mos) //这里传了�
 }                                    
 
 void placement::swap_mos(net* this_net){
+
     int method=rand()%3;
     //交换
     //0表示交换pmos，1表示交换nmos,2表示都换
@@ -108,12 +111,14 @@ void placement::swap_mos(net* this_net){
 
         }
     }
+
 }
 
 //产生随机解
 void placement::GenerateRandomSolutions(net* this_net)
 {
 
+        //随机打乱pmos
         std::random_device rd;
         std::mt19937 rng(rd());
         for(int i=0;i<this_net->num_pmos;i++)
@@ -133,6 +138,7 @@ void placement::GenerateRandomSolutions(net* this_net)
 //依据loc布局
 void placement::layout(net* this_net)
 {
+
     int num_nmos=0;
     int num_pmos=0;
     int x_p=1;
@@ -223,7 +229,7 @@ void placement::layout(net* this_net)
 
 
 
-    
+
 
 }
 
@@ -248,7 +254,6 @@ void placement::Slover()
         std::cout<<"\n";
         std::cout<<get_cost_0(network[a])<<std::endl;
 
-
         SA(network[a]);
         for(int i : network[a]->pmos_loc){
             std::cout<<i<<" ";
@@ -265,6 +270,7 @@ void placement::Slover()
     }
 }
 void placement::reverse_mos(net* this_net){
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> random_noms(0,this_net->num_nmos-1);
@@ -334,16 +340,17 @@ double placement::action(double max_T,double &T_descent_rate,double &T,net* this
 
 
 void placement::SA(net *this_net) {
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<double> dis(0.0, 1.0);
     std::uniform_int_distribution<int> int_u(0,1);//0是交换，1是反转
     int count=0;
-    double T_max=std::max(this_net->num_nmos,this_net->num_pmos)*30;
+    double T_max=std::max(this_net->num_nmos,this_net->num_pmos)*1400;
     double T=T_max;
     double T_descent_rate=0.99;
-    double T_min=0.002;
-    int iteration=5;
+    double T_min=0.001;
+    int iteration=50;
     net* new_net=new net(*this_net);
     while (T>T_min)
     {

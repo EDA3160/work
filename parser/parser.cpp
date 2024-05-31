@@ -85,13 +85,56 @@ std::vector<net*> parser::m_parser()
                     m_long = m_wide1;
                 if(sort == 0)
                 {
-                    mos* n = new mos(name,sort,source,gate,drain,m_wide,m_long);
-                    nmos.push_back(n);
+                    if(m_wide > 220)
+                    {
+                        if(m_wide%2==1){
+                            mos* n = new mos(name+"_finger${1}",sort,source,gate,drain,m_wide/2+1,m_long);
+                            mos* n1 = new mos(name+"_finger${2}",sort,source,gate,drain,m_wide/2,m_long);
+                            nmos.push_back(n);
+                            nmos.push_back(n1);
+                            num_nmos++;
+                        }
+                        else
+                        {
+                            mos* n = new mos(name+"_finger${1}",sort,source,gate,drain,m_wide/2,m_long);
+                            mos* n1 = new mos(name+"_finger${2}",sort,source,gate,drain,m_wide/2,m_long);
+                            nmos.push_back(n);
+                            nmos.push_back(n1);
+                            num_nmos++;
+                        }
+
+                    }
+                    else
+                    {
+                        mos *n = new mos(name, sort, source, gate, drain, m_wide, m_long);
+                        nmos.push_back(n);
+                    }
                 }
                 else
                 {
-                    mos* m = new mos(name,sort,source,gate,drain,m_wide,m_long);
-                    pmos.push_back(m);
+                    if(m_wide > 220)
+                    {
+                        if(m_wide%2==1){
+                            mos *m = new mos(name+"_finger${1}" ,sort, source, gate, drain, m_wide/2+1, m_long);
+                            mos *m1 = new mos(name+"_finger${2}", sort, source, gate, drain, m_wide/2, m_long);
+                            pmos.push_back(m);
+                            pmos.push_back(m1);
+                            num_pmos++;
+                        }
+                        else{
+                            mos *m = new mos(name+"_finger${1}" ,sort, source, gate, drain, m_wide/2, m_long);
+                            mos *m1 = new mos(name+"_finger${2}", sort, source, gate, drain, m_wide/2, m_long);
+                            pmos.push_back(m);
+                            pmos.push_back(m1);
+                            num_pmos++;
+                        }
+
+                    }
+                    else
+                    {
+                        mos *m = new mos(name, sort, source, gate, drain, m_wide, m_long);
+                        pmos.push_back(m);
+                    }
                 }
             }
         }
