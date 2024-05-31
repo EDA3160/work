@@ -138,7 +138,7 @@ void placement::GenerateRandomSolutions(net* this_net)
 //依据loc布局
 void placement::layout(net* this_net)
 {
-
+    int temp=0;
     int num_nmos=0;
     int num_pmos=0;
     int x_p=1;
@@ -147,7 +147,7 @@ void placement::layout(net* this_net)
     std::string n_right;
     std::vector<int>& pmos_loc=this_net->pmos_loc;
     std::vector<int>& nmos_loc=this_net->nmos_loc;
-    
+
     while (num_nmos < this_net->num_nmos && num_pmos < this_net->num_pmos)
     {
 
@@ -160,7 +160,7 @@ void placement::layout(net* this_net)
                 x_p++;
             }
             //可重叠但是上一个nmos占用该x坐标并且栅极不相等
-            else if(x_p==this_net->nmos[nmos_loc[num_nmos-1]]->m_x&&this_net->nmos[nmos_loc[num_nmos-1]]->m_gate!=this_net->pmos[pmos_loc[num_pmos]]->m_gate){
+            if(x_p==this_net->nmos[nmos_loc[num_nmos-1]]->m_x&&this_net->nmos[nmos_loc[num_nmos-1]]->m_gate!=this_net->pmos[pmos_loc[num_pmos]]->m_gate){
                 x_p++;
             }
 
@@ -177,26 +177,52 @@ void placement::layout(net* this_net)
 
             }
 
-            else if(x_n==this_net->pmos[pmos_loc[num_pmos-1]]->m_x&&this_net->pmos[pmos_loc[num_pmos-1]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
-                x_n++;
-            }
+//            if(x_n==this_net->pmos[pmos_loc[num_pmos-1]]->m_x&&this_net->pmos[pmos_loc[num_pmos-1]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
+//                x_n++;
+//            }
+//            if(num_pmos-1>0){
+//                if(x_n==this_net->pmos[pmos_loc[num_pmos-2]]->m_x&&this_net->pmos[pmos_loc[num_pmos-2]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
+//                    x_n++;
+//                }
+//            }
         }
 
 
         //判断栅极是否可连接
 
-        if(x_n==this_net->pmos[pmos_loc[num_pmos]]->m_x&&this_net->pmos[pmos_loc[num_pmos]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
-            x_n++;
-        }
+//        if(x_n==this_net->pmos[pmos_loc[num_pmos]]->m_x&&this_net->pmos[pmos_loc[num_pmos]]->m_gate!=this_net->nmos[nmos_loc[num_nmos]]->m_gate){
+//            x_n++;
+//        }
+
+
+            for(int i=0;i<=num_pmos;i++){
+                //std::cout<<i<<" ";
+                if(x_n==this_net->pmos[pmos_loc[i]]->m_x && this_net->nmos[nmos_loc[num_nmos]]->m_gate!=this_net->pmos[pmos_loc[i]]->m_gate){
+
+                    x_n++;
+
+                }
+                if(x_n==this_net->pmos[pmos_loc[i]]->m_x && this_net->nmos[nmos_loc[num_nmos]]->m_gate==this_net->pmos[pmos_loc[i]]->m_gate){
+
+                    break;
+
+                }
+               if(x_n<this_net->pmos[pmos_loc[i]]->m_x){
+                    break;
+               }
+            }
+
+
         //布局nmos
 
         this_net->nmos[nmos_loc[num_nmos]]->m_x=x_n++;
 
         //记录右端线网
         p_right=this_net->pmos[pmos_loc[num_pmos]]->m_drain;
+        num_pmos++;
         n_right=this_net->nmos[nmos_loc[num_nmos]]->m_drain;
         num_nmos++;
-        num_pmos++;
+
     }
 
     //nmos布局完pmos剩余的情况
